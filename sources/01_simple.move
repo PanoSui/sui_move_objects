@@ -1,23 +1,25 @@
 module objects::must_drop;
 
+#[allow(unused_field)]
 public struct Simple {
     test: u64
 }
 
+#[test_only]
 use sui::test_scenario as ts;
+#[test_only]
 use sui::test_utils::assert_eq;
 
-const DEPLOYER: address = @0x0;
 
 #[test]
 fun test() {
-    let scenario = ts::begin(DEPLOYER);
+    let scenario = ts::begin(@0x0);
 
     let obj = Simple {
         test: 20
     };
     assert_eq(obj.test, 20);
-    let Simple { test: _ } = obj;
+    let Simple { .. } = obj;
 
     scenario.end();
 }

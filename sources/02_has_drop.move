@@ -1,17 +1,19 @@
 module objects::has_drop;
 
+#[allow(unused_field)]
 public struct HasDrop has drop {
     test: u64
 }
 
+#[test_only]
 use sui::test_scenario as ts;
+#[test_only]
 use sui::test_utils::assert_eq;
 
-const DEPLOYER: address = @0x0;
 
 #[test]
 fun test() {
-    let scenario = ts::begin(DEPLOYER);
+    let scenario = ts::begin(@0x0);
 
     let obj = HasDrop {
         test: 20
