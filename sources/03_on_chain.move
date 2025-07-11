@@ -1,7 +1,7 @@
 module objects::on_chain;
 
 #[allow(unused_field)]
-public struct OnChain has key, store {
+public struct OnChain has key {
     id: UID,
     test: u64
 }
@@ -18,7 +18,7 @@ fun init(ctx: &mut TxContext) {
     transfer::transfer(private_obj, ctx.sender());
 
     let public_object = new_obj(40, ctx);
-    transfer::public_share_object(public_object);
+    transfer::share_object(public_object);
 }
 
 #[test_only]
@@ -45,7 +45,7 @@ fun test_public() {
     let obj = new_obj(20, scenario.ctx());
     assert_eq(obj.test, 20);
 
-    transfer::public_share_object(obj);
+    transfer::share_object(obj);
 
     scenario.end();
 }
